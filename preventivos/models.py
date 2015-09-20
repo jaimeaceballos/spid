@@ -20,6 +20,7 @@ class Registrouser(models.Model):
 
 	class Meta: 
 		db_table = 'Registrouser'
+		app_label = 'preventivos'
 	   
 class UserProfile(models.Model):
 	user = models.OneToOneField(User)
@@ -32,7 +33,7 @@ class UserProfile(models.Model):
 
 	class Meta: 
 		db_table = 'UserProfile'
-	   
+		app_label = 'preventivos'
 		
 	def user_profile(sender, instance, signal, *args, **kwargs):
 		# Creates user profile
@@ -55,6 +56,7 @@ class RefPaises(models.Model):
 	class Meta: 
 		ordering = ["descripcion"]
 		db_table = 'ref_paises'
+		app_label = 'preventivos'
 
 	def save(self, force_insert=False, force_update=False):
 		self.descripcion = self.descripcion.upper()
@@ -79,7 +81,8 @@ class RefProvincia(models.Model):
 		unique_together=('descripcion','pais',)
 		db_table = 'ref_provincia'
 		ordering = ["descripcion"]
-	 
+	 	app_label = 'preventivos'
+
 class RefDepartamentos(models.Model):
 	id = models.AutoField(primary_key=True)
 	descripcion = models.CharField("Ingrese Departamento :", unique=True, max_length=45L)
@@ -98,7 +101,8 @@ class RefDepartamentos(models.Model):
 		#unique_together=('descripcion','provincia',)
 		ordering = ["descripcion"]
 		db_table = 'ref_departamentos'
-		
+		app_label = 'preventivos'
+
 class RefCiudades(models.Model):
 	id = models.AutoField(primary_key=True)
 	descripcion = models.CharField(max_length=80L)
@@ -120,6 +124,7 @@ class RefCiudades(models.Model):
 		unique_together = ('pais','provincia','departamento','descripcion',)
 		ordering = ["descripcion"]
 		db_table = 'ref_ciudades'
+		app_label = 'preventivos'
 
 #modelo de datos de referencias de tipos de lugares en donde se cometio el hecho
 class RefLugares(models.Model):
@@ -137,6 +142,7 @@ class RefLugares(models.Model):
 	class Meta:
 		ordering = ["descripcion"]
 		db_table = 'ref_lugares'
+		app_label = 'preventivos'
 
 class RefHogares(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -153,6 +159,7 @@ class RefHogares(models.Model):
 	class Meta:
 		ordering = ["descripcion"]
 		db_table = 'ref_hogares'
+		app_label = 'preventivos'
 
 class RefCondclimas(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -169,6 +176,7 @@ class RefCondclimas(models.Model):
 	class Meta:
 		ordering = ["descripcion"]
 		db_table = 'ref_condclimas'
+		app_label = 'preventivos'
 
 class UnidadesRegionales(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -188,6 +196,7 @@ class UnidadesRegionales(models.Model):
 		unique_together = ('descripcion','ciudad')
 		ordering = ["descripcion"]
 		db_table = 'unidades_regionales'
+		app_label = 'preventivos'
  
 class Dependencias(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -208,6 +217,7 @@ class Dependencias(models.Model):
 		unique_together = ('descripcion','unidades_regionales','ciudad')
 		ordering = ["descripcion"]
 		db_table = 'dependencias'
+		app_label = 'preventivos'
 
 
 class RefPeople(models.Model):
@@ -223,6 +233,7 @@ class RefPeople(models.Model):
 	class Meta: 
 		ordering = ["descripcion"]
 		db_table = 'ref_people'
+		app_label = 'preventivos'
 
 	def save(self, force_insert=False, force_update=False):
 		self.descripcion = self.descripcion.upper()
@@ -243,6 +254,7 @@ class RefTipoDelitos(models.Model):
 	class Meta:
 		ordering =["descripcion"]
 		db_table = 'ref_tipo_delito'
+		app_label = 'preventivos'
  
 class RefDelito(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -261,6 +273,7 @@ class RefDelito(models.Model):
 		unique_together=('descripcion','tipo_delito')
 		ordering = ["descripcion"]
 		db_table = 'ref_delito'
+		app_label = 'preventivos'
 
 class RefOcupacion(models.Model):
 	id = models.AutoField(primary_key= True)
@@ -277,6 +290,7 @@ class RefOcupacion(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'ref_ocupacion'
+		app_label = 'preventivos'
 
 
 class RefTrademark(models.Model):
@@ -294,6 +308,7 @@ class RefTrademark(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'ref_trademark'   
+		app_label = 'preventivos'
 
 class RefTiposarmas(models.Model):
 	id = models.AutoField(primary_key=True)        
@@ -309,7 +324,8 @@ class RefTiposarmas(models.Model):
 
 	class Meta:
 		ordering = ['descripcion']
-		db_table = 'ref_tiposarmas'    
+		db_table = 'ref_tiposarmas'   
+		app_label = 'preventivos' 
 
 class RefSubtiposa(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -330,6 +346,7 @@ class RefSubtiposa(models.Model):
 		unique_together=('descripcion','tipo',)
 		db_table = 'ref_subtiposa'
 		ordering = ["descripcion"]
+		app_label = 'preventivos'
 
 class RefSistemadis(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -349,6 +366,7 @@ class RefSistemadis(models.Model):
 		unique_together=('descripcion',)
 		db_table = 'ref_sistemadis'
 		ordering = ["descripcion"]
+		app_label = 'preventivos'
 
 
 
@@ -366,7 +384,8 @@ class RefItems(models.Model):
 
 	class Meta:
 		ordering = ['descripcion']
-		db_table = 'ref_items'    
+		db_table = 'ref_items'   
+		app_label = 'preventivos' 
 
 class RefCategory(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -387,6 +406,7 @@ class RefCategory(models.Model):
 		unique_together=('descripcion','rubro',)
 		db_table = 'ref_category'
 		ordering = ["descripcion"]
+		app_label = 'preventivos'
 
 class RefBarrios(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -406,6 +426,7 @@ class RefBarrios(models.Model):
 		unique_together = ('descripcion','ciudad',)
 		ordering = ["descripcion"]
 		db_table = 'ref_barrios'
+		app_label = 'preventivos'
 	   
 	  
 class RefCalles(models.Model):
@@ -426,6 +447,7 @@ class RefCalles(models.Model):
 		unique_together = ('descripcion','ciudad',)
 		ordering = ["descripcion"]
 		db_table = 'ref_calles'
+		app_label = 'preventivos'
 
 class RefAutoridad(models.Model):
 	id = models.AutoField(primary_key = True)
@@ -444,6 +466,7 @@ class RefAutoridad(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'ref_autoridad'
+		app_label = 'preventivos'
  
 class RefTipoJerarquia(models.Model):
 	id = models.AutoField(primary_key = True)
@@ -456,6 +479,7 @@ class RefTipoJerarquia(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'ref_tipo_jerarquia'
+		app_label = 'preventivos'
  
 class RefDivisionJerarquia(models.Model):
 	id = models.AutoField(primary_key = True)
@@ -468,6 +492,7 @@ class RefDivisionJerarquia(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'ref_division_jerarquia'
+		app_label = 'preventivos'
  
 class RefJerarquias(models.Model):
 	id = models.AutoField(primary_key = True)
@@ -482,6 +507,7 @@ class RefJerarquias(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'ref_jerarquias'
+		app_label = 'preventivos'
 
 class RefSexo(models.Model):
 	id = models.AutoField(primary_key = True)
@@ -497,6 +523,7 @@ class RefSexo(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'ref_sexo'
+		app_label = 'preventivos'
 
 class RefEstadosciv(models.Model):
 	id = models.AutoField(primary_key = True)
@@ -509,7 +536,8 @@ class RefEstadosciv(models.Model):
   
 	class Meta:
 		ordering = ['descripcion']
-		db_table = 'ref_estadociv'        
+		db_table = 'ref_estadociv' 
+		app_label = 'preventivos'       
 
 class RefTipoDocumento(models.Model):
 	id = models.AutoField(primary_key = True)
@@ -529,6 +557,7 @@ class RefTipoDocumento(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'ref_tipodocumento'
+		app_label = 'preventivos'
 
 class RefEstudios(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -548,6 +577,7 @@ class RefEstudios(models.Model):
 	class Meta:
 		ordering = ["descripcion"]
 		db_table = 'ref_estudios'
+		app_label = 'preventivos'
 
 class Personas(models.Model):
 	id = models.AutoField(primary_key = True)
@@ -588,6 +618,7 @@ class Personas(models.Model):
 		unique_together=('tipo_doc','nro_doc','apellidos','nombres',)
 		ordering = ['apellidos']
 		db_table = 'personas'
+		app_label = 'preventivos'
 
 class Actuantes(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -610,6 +641,7 @@ class Actuantes(models.Model):
 	class Meta:
 		ordering = ['documento']
 		db_table = 'actuantes'
+		app_label = 'preventivos'
 
 class Personal(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -626,6 +658,7 @@ class Personal(models.Model):
 
 		ordering = ['id']
 		db_table = 'personal'
+		app_label = 'preventivos'
 
 class RefComunidades(models.Model):
 	id = models.AutoField(primary_key = True)
@@ -643,6 +676,7 @@ class RefComunidades(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'ref_comunidades'
+		app_label = 'preventivos'
 
 class Preventivos(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -669,6 +703,7 @@ class Preventivos(models.Model):
 	class Meta:
 		ordering = ['nro','anio','dependencia']
 		db_table = 'preventivos'
+		app_label = 'preventivos'
 
 class RefModosHecho(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -686,6 +721,7 @@ class RefModosHecho(models.Model):
 		unique_together=('descripcion','delito',)
 		ordering = ['id']
 		db_table = 'ref_modos_hecho'
+		app_label = 'preventivos'
 
 class RefMotivosHecho(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -695,6 +731,7 @@ class RefMotivosHecho(models.Model):
 	class Meta:
 		ordering = ['id']
 		db_table = 'ref_motivos_hecho'
+		app_label = 'preventivos'
 
 
 
@@ -717,6 +754,7 @@ class Hechos(models.Model):
 	class Meta:
 		ordering = ['fecha_carga','preventivo',]
 		db_table = 'hechos'
+		app_label = 'preventivos'
 
 class HechosDelito(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -735,6 +773,7 @@ class HechosDelito(models.Model):
 		ordering = ['id']
 		db_table = 'hechos_delito'
 		unique_together = ('hechos','refdelito','refmodoshecho',)
+		app_label = 'preventivos'
 
 
 class PersInvolucradas(models.Model):
@@ -767,6 +806,7 @@ class PersInvolucradas(models.Model):
 		unique_together = ('hechos','persona','roles','cargado_prev','ampliacion',)
 		ordering = ['id']
 		db_table = 'persinvolucradas'
+		app_label = 'preventivos'
 
 class Padres(models.Model):
 	id=models.AutoField(primary_key=True)
@@ -790,6 +830,7 @@ class Padres(models.Model):
 		unique_together=('persona','padre_nombres','padre_apellidos','madre_nombres','madre_apellidos',)
 		ordering = ['id']
 		db_table = 'padres'
+		app_label = 'preventivos'
 
 class Detenidos(models.Model):
 	id=models.AutoField(primary_key=True)
@@ -812,6 +853,7 @@ class Detenidos(models.Model):
 		unique_together=('hechos','persona',)
 		ordering = ['id']
 		db_table = 'detenidos'
+		app_label = 'preventivos'
 
 class Domicilios(models.Model):
 	personas = models.ForeignKey('Personas',related_name='persodom')
@@ -838,6 +880,7 @@ class Domicilios(models.Model):
 		unique_together=('personas','ref_ciudades','barrio_codigo','fecha_desde','calle','altura')
 		ordering = ['-fecha_desde']
 		db_table = 'domicilios'
+		app_label = 'preventivos'
 
 class Lugar(models.Model):
 	calle = models.ForeignKey(RefCalles,related_name='calle_hecho',on_delete=models.PROTECT,blank=True,null = True)
@@ -868,6 +911,7 @@ class Lugar(models.Model):
 	class Meta:
 		ordering = ['id']
 		db_table = 'lugar'
+		app_label = 'preventivos'
 
 #modelo de elementos 
 class RefTipoelementos(models.Model):
@@ -885,6 +929,7 @@ class RefTipoelementos(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'reftipoelementos'
+		app_label = 'preventivos'
 
 class RefUnidadmedidas(models.Model):
 	id=models.AutoField(primary_key=True)
@@ -901,6 +946,7 @@ class RefUnidadmedidas(models.Model):
 		unique_together=('descripcion',)
 		ordering = ['descripcion']
 		db_table = 'refunidadmedidas'
+		app_label = 'preventivos'
 """
 class RefCategorias(models.Model):
 	id=models.AutoField(primary_key=True)
@@ -941,6 +987,7 @@ class Elementos(models.Model):
 
 		ordering = ['tipo','descripcion']
 		db_table = 'elementos'
+		app_label = 'preventivos'
 
 
 class Armas(models.Model):
@@ -967,6 +1014,7 @@ class Armas(models.Model):
 		#unique_together=['nro_arma',]
 		ordering = ['tipos','subtipos','marcas',]
 		db_table = 'armas'
+		app_label = 'preventivos'
 
 class Elementosarmas(models.Model):
 	id=models.AutoField(primary_key=True)
@@ -983,6 +1031,7 @@ class Elementosarmas(models.Model):
 	   
 		ordering = ['idelemento',]
 		db_table = 'elementosarmas'
+		app_label = 'preventivos'
 
 """
 #modelo de elementos automotores
@@ -1028,6 +1077,7 @@ class Vehiculos(models.Model):
 	class Meta:
 		ordering = ['dominio',]
 		db_table = 'vehiculos'
+		app_label = 'preventivos'
 
 
 class Elementoscars(models.Model):
@@ -1041,6 +1091,7 @@ class Elementoscars(models.Model):
 	class Meta:
 
 		db_table = 'elementoscars'
+		app_label = 'preventivos'
 
 class RefTipodrogas(models.Model):
 	id = models.AutoField(primary_key = True)
@@ -1062,7 +1113,7 @@ class RefTipodrogas(models.Model):
 	class Meta: 
 		ordering = ["descripcion"]
 		db_table = 'reftipodrogas'
-
+		app_label = 'preventivos'
 
 
 class Drogas(models.Model):
@@ -1079,12 +1130,15 @@ class Drogas(models.Model):
 	class Meta:
 		ordering = ['descripcion',]
 		db_table = 'drogas'
-
+		app_label = 'preventivos'
 
 class Elementosdrogas(models.Model):
 	id=models.AutoField(primary_key=True)
 	idelemento=models.ForeignKey('Elementos')
 	droga=models.ForeignKey('Drogas')
+
+	class Meta:
+		app_label = 'preventivos'
 
 class Ampliacion(models.Model):
 	id                  = models.AutoField(primary_key = True)
@@ -1108,6 +1162,7 @@ class Ampliacion(models.Model):
 	class Meta:
 		ordering    = ['id']
 		db_table    = 'ampliacion'
+		app_label = 'preventivos'
 
 """
 class ViolenciaFliar(models.Model):
@@ -1270,6 +1325,7 @@ class Nacionalidad(models.Model):
 	class Meta: 
 		ordering = ["descripcion"]
 		db_table = 'nacionalidad'
+		app_label = 'preventivos'
 
 	def save(self, force_insert=False, force_update=False):
 		self.descripcion = self.descripcion.upper()
@@ -1287,6 +1343,7 @@ class Provincia(models.Model):
 	class Meta: 
 		ordering = ["descripcion"]
 		db_table = 'provincias'
+		app_label = 'preventivos'
 
 	def save(self, force_insert=False, force_update=False):
 		self.descripcion = self.descripcion.upper()
@@ -1305,6 +1362,7 @@ class Localidad(models.Model):
 	class Meta: 
 		ordering = ["descripcion"]
 		db_table = 'Localidad'
+		app_label = 'preventivos'
 
 	def save(self, force_insert=False, force_update=False):
 		self.descripcion = self.descripcion.upper()
@@ -1323,6 +1381,7 @@ class Calles(models.Model):
 	class Meta: 
 		ordering = ["descripcion"]
 		db_table = 'calles'
+		app_label = 'preventivos'
 
 	def save(self, force_insert=False, force_update=False):
 		self.descripcion = self.descripcion.upper()
@@ -1341,6 +1400,7 @@ class Comisarias(models.Model):
 	class Meta: 
 		ordering = ["descripcion"]
 		db_table = 'comisarias'
+		app_label = 'preventivos'
 
 	def save(self, force_insert=False, force_update=False):
 		self.descripcion = self.descripcion.upper()
@@ -1359,6 +1419,7 @@ class Barrio(models.Model):
 	class Meta: 
 		ordering = ["descripcion"]
 		db_table = 'barrio'
+		app_label = 'preventivos'
 
 	def save(self, force_insert=False, force_update=False):
 		self.descripcion = self.descripcion.upper()
@@ -1373,7 +1434,8 @@ class Estadocivil(models.Model):
   
 	class Meta:
 		ordering = ['descripcion']
-		db_table = 'Estadocivil'        
+		db_table = 'Estadocivil'  
+		app_label = 'preventivos'      
 
 class Tipodocumentos(models.Model):
 	idtipodocumento=models.CharField(primary_key=True,max_length=5)
@@ -1385,6 +1447,7 @@ class Tipodocumentos(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'Tipodocumentos'
+		app_label = 'preventivos'
 
 class RolPersonas(models.Model):
 	idRolPersonas=models.CharField(primary_key=True,max_length=5)
@@ -1396,6 +1459,7 @@ class RolPersonas(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'rolpersonas'
+		app_label = 'preventivos'
 
 class TipoOcupacion(models.Model):
 	idtipoocupacion=models.AutoField(primary_key=True)
@@ -1407,6 +1471,7 @@ class TipoOcupacion(models.Model):
 	class Meta:
 		ordering = ['descripcion']
 		db_table = 'tipocupacion'
+		app_label = 'preventivos'
 
 class EnvioPreJudicial(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -1422,6 +1487,7 @@ class EnvioPreJudicial(models.Model):
 	class Meta:
 		ordering = ['fecha_envio']
 		db_table = 'envioprejudicial'
+		app_label = 'preventivos'
 
 class EnvioAmpJudicial(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -1437,3 +1503,4 @@ class EnvioAmpJudicial(models.Model):
 	class Meta:
 		ordering = ['fecha_envio']
 		db_table = 'envioampjudicial'
+		app_label = 'preventivos'

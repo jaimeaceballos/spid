@@ -1,5 +1,5 @@
 #encoding:utf-8 
-from preventivos.models import *
+from models import *
 from preventivos.forms import *
 from django.core.context_processors import csrf
 from django.template import Context, Template, RequestContext

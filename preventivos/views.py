@@ -45,8 +45,9 @@ from datetime import date,timedelta
 import datetime
 from time import strptime
 from decorators.auth import group_required
-from django.core.mail import *
-from django.utils import simplejson,timezone
+from django.core.mail import send_mail
+from django.utils import timezone
+import json as simplejson
 from django.utils.html import strip_tags
 from django.utils.safestring import mark_safe,SafeString
 from django.contrib.auth.forms import AuthenticationForm
@@ -54,7 +55,7 @@ from django.contrib.auth.decorators import login_required,permission_required
 from django.db import transaction,IntegrityError,connection
 from django.core.urlresolvers import reverse
 # set up the environment using the settings module
-from django.core.management import setup_environ
+#from django.core.management import setup_environ
 from django.conf import settings
 from spid import settings
 import sys,os, re, calendar
@@ -63,9 +64,9 @@ from django.utils.encoding import smart_text
 #imports para la paginacion
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.db.models.signals  import  post_save,post_delete
-from django.contrib.formtools.wizard.views import SessionWizardView
+from formtools.wizard.views import SessionWizardView
 from django.template import Context, loader
-from haystack.query import SearchQuerySet
+#from haystack.query import SearchQuerySet
 from django.db.models import Q
 #from reportlab.pdfgen import canvas
 from django.utils.translation import ugettext

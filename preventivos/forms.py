@@ -32,7 +32,7 @@ class GroupForm(forms.ModelForm):
 	#name = forms.CharField(required=True)
 	class Meta:
 		model = Group
-		exclude=('name')
+		exclude=("name",)
 		   
 		groups = forms.ModelChoiceField(
 		Group.objects.all(), 
@@ -74,114 +74,132 @@ class UserProfileForm(forms.ModelForm):
 	class Meta():
 	   
 		model = UserProfile
-		fields=('ureg','depe')
+		fields=("ureg","depe",)
 
 class CiudadesForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefCiudades
+		fields = ("id","descripcion","departamento","provincia","pais","lat","longi",)
 
 class DepartamentosForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefDepartamentos
+		fields = ("id","descripcion","provincia",)
 
 class ProvinciasForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
    
 	class Meta:
 		model = RefProvincia
-
+		fields = ("id", "descripcion", "pais",)
 
 class PaisesForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefPaises
+		fields = ("id","descripcion",)
 
 class LugaresForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefLugares
+		fields = ("id","descripcion",)
 
 class HogaresForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefHogares
+		fields =("id","descripcion",)
 
 class CondclimasForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefCondclimas
+		fields =("id","descripcion",)
 
 class UnidadesForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
-	ciudad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefCiudades.objects.filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
+	ciudad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefCiudades.objects.all())#RefCiudades.objects.filter(provincia = RefProvincia.objects.get(descripcion = "CHUBUT").id)  )
 	class Meta:
 		model = UnidadesRegionales
+		fields =("id","descripcion","ciudad",)
  
 class DependenciasForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
-	ciudad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefCiudades.objects.filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
+	ciudad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefCiudades.objects.all())#RefCiudades.objects.filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
 	unidades_regionales = forms.ModelChoiceField(widget = forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= UnidadesRegionales.objects.all())
 
 	
 	class Meta:
-		model = Dependencias        
+		model = Dependencias  
+		fields = ('id','descripcion','unidades_regionales','ciudad',)      
 
 class PeopleForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefPeople
+		fields = ('id','descripcion',)
 
 class TipoDelitosForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefTipoDelitos
+		fields = ('id','descripcion',)
  
 class DelitoForm(forms.ModelForm):
 	descripcion = forms.CharField(required = True)
 	tipo_delito = forms.ModelChoiceField(widget = forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefTipoDelitos.objects.all())
 	class Meta:
 		model = RefDelito
+		fields = ('id','tipo_delito','descripcion',)
 
 class JobsForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefOcupacion
+		fields = ('id','descripcion',)
 
 class TrademarkForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefTrademark
+		fields = ('id','descripcion',)
 
 class TiposarmasForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefTiposarmas
+		fields = ('id','descripcion',)
 
 class SubtiposaForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefSubtiposa
+		fields = ('id','descripcion',)
 
 class SistemadisForm(forms.ModelForm):
 	#descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefSistemadis
+		fields = ('id','descripcion',)
 
 class ItemForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefItems
+		fields = ('id','descripcion',)
 
 class CategoryForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
 	class Meta:
 		model = RefCategory
+		fields = ('id','descripcion',)
 
 class BarriadasForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
-	ciudad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefCiudades.objects.filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
+	ciudad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefCiudades.objects.all())#filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
    
 	class Meta:
 	  model = RefBarrios
@@ -189,10 +207,11 @@ class BarriadasForm(forms.ModelForm):
   
 class AddressForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
-	ciudad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefCiudades.objects.filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
+	ciudad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13', 'onchange':'this.form.action=this.form.submit()'}), queryset= RefCiudades.objects.all())#filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
    
 	class Meta:
-	  model = RefCalles   
+	  model = RefCalles
+	  fields = ('id','descripcion','ciudad',)   
 
 class AuthoritiesForm(forms.ModelForm):
 	descripcion = forms.CharField(required=True)
@@ -213,18 +232,21 @@ class TipoJerarquiaForm(forms.ModelForm):
  
 	class Meta:
 		model = RefTipoJerarquia
+		fields = ('id','descripcion',)
  
 class DivisionJerarquiaForm(forms.ModelForm):
 	descripcion = forms.CharField(required = True)
  
 	class Meta:
 		model = RefDivisionJerarquia
+		fields = ('id','descripcion',)
  
 class JerarquiasForm(forms.ModelForm):
 	descripcion = forms.CharField(required = True)
  
 	class Meta:
 		model = RefJerarquias
+		fields = ('id','descripcion','ref_tipo_jerarquia','ref_division_jerarquia',)
 
 class SexoForm(forms.ModelForm):
 	Sexo_opciones=(
@@ -235,6 +257,7 @@ class SexoForm(forms.ModelForm):
   
 	class Meta:
 		model = RefSexo
+		fields = ('id','descripcion',)
 
 class TipodocForm(forms.ModelForm):
 	Doc_opciones=(
@@ -248,6 +271,7 @@ class TipodocForm(forms.ModelForm):
   
 	class Meta:
 		model = RefTipoDocumento
+		fields = ('id','descripcion',)
 
 class ActuantesForm(forms.ModelForm):
 	fcio_opciones=(('1','ACTUANTE'),('2','PREVENTOR'),('3','ACT / PREV'))
@@ -255,6 +279,7 @@ class ActuantesForm(forms.ModelForm):
 	
 	class Meta:
 		model = Actuantes
+		exclude = ()
 		
 
 class HorizRadioRenderer(forms.RadioSelect.renderer):
@@ -287,6 +312,7 @@ class PersonasForm(forms.ModelForm):
 	class Meta:
 		model = Personas
 		#fields = ('estado_civil','nro_doc','ciudad_res','ocupacion')
+		exclude = ()
 	
 
 
@@ -294,6 +320,7 @@ class PersonalForm(forms.ModelForm):
 
 	class Meta:
 		model = Personal
+		exclude = ()
 
 class ComunidadesForm(forms.ModelForm):
 	Zonas_opciones=(
@@ -305,6 +332,7 @@ class ComunidadesForm(forms.ModelForm):
   
 	class Meta:
 		model = RefComunidades
+		exclude = ()
 
 class PrimerForm(forms.ModelForm):
 	unidad = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13'}), queryset= UnidadesRegionales.objects.all(), required=False)
@@ -543,6 +571,7 @@ class HechosDelitoForm(forms.ModelForm):
 
 	class Meta:
 		model = HechosDelito
+		exclude = ()
 
 nuevo=(('si','SI'),('no','NO'),)
 class PersInvolucradasForm(forms.ModelForm):
@@ -629,6 +658,7 @@ class UnidadMedidasForm(forms.ModelForm):
 
 	class Meta:
 		model = RefUnidadmedidas
+		exclude = ()
 
 class ArmasForm(forms.ModelForm):
 	nueva_marca = forms.CharField(required=False)
@@ -642,6 +672,7 @@ class ArmasForm(forms.ModelForm):
 		return nueva_marca
 	class Meta:
 		model = Armas
+		exclude = ()
 
 class VehiculosForm(forms.ModelForm):
 
@@ -657,9 +688,10 @@ class VehiculosForm(forms.ModelForm):
 
 	class Meta:
 		model = Vehiculos
+		exclude = ()
 
 class MapaForm(forms.Form):
-	ciudades = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13',}), required=False, queryset= RefCiudades.objects.filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
+	ciudades = forms.ModelChoiceField(widget=forms.Select(attrs={'size':'13',}), required=False, queryset= RefCiudades.objects.all())#filter(provincia__contains = RefProvincia.objects.filter(descripcion__contains = 'CHUBUT').values('id'))  )
 	ureg= forms.ModelChoiceField(widget = forms.Select(attrs={'size':'13', }), required=False, queryset= UnidadesRegionales.objects.exclude(descripcion__icontains='INVESTIGACION') &  UnidadesRegionales.objects.exclude(descripcion__icontains='AREA'))
 	depe = forms.Select()
 	ciu = forms.BooleanField(required=False,initial=False)
