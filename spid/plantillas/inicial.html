@@ -6,19 +6,20 @@
      <script type="text/javascript" charset="utf-8">
      $(document).ready(function() {
      $('#ureg').change(function(event){
+
         var toLoad;
 
         var estado= $('#estado').val();
-       
+        
         var valor = $('#ureg').val();
         var options;
-  
+        
         if (estado!=''){
          toLoad= '../depes/'+valor+'/';
         }else{
          toLoad= 'depes/'+valor+'/';
         }
-       
+        
         $.get(toLoad, function(data){
          options = '<option value="">Seleccione Dependencia</option>';
        

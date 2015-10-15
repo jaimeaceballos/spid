@@ -23,7 +23,7 @@ class Registrouser(models.Model):
 		app_label = 'preventivos'
 	   
 class UserProfile(models.Model):
-	user = models.OneToOneField(User)
+	user = models.OneToOneField(User,related_name="get_profile")
 	ureg = models.ForeignKey('UnidadesRegionales',blank=True, null=True,)
 	depe = models.ForeignKey('Dependencias',blank=True, null=True,)
 	last_login = models.BooleanField(default=True)
@@ -452,7 +452,7 @@ class RefCalles(models.Model):
 class RefAutoridad(models.Model):
 	id = models.AutoField(primary_key = True)
 	descripcion = models.CharField(max_length = 80)
-	ciudades = models.ManyToManyField('RefCiudades', related_name="ciu_autori", blank = True, null = True)
+	ciudades = models.ManyToManyField('RefCiudades', related_name="ciu_autori", blank = True)
 	email = models.EmailField("e mail",max_length = 300)
  
 	def __unicode__(self):
@@ -623,7 +623,7 @@ class Personas(models.Model):
 class Actuantes(models.Model):
 	id = models.AutoField(primary_key=True)
 	funcion = models.IntegerField()
-	documento = models.IntegerField(max_length=8, unique=True)
+	documento = models.IntegerField(unique=True)
 	apeynombres = models.CharField(max_length=250)
 	jerarquia_id = models.ForeignKey('RefJerarquias', on_delete=models.PROTECT)
 	persona_id = models.ForeignKey('Personas', on_delete=models.PROTECT)
@@ -690,7 +690,7 @@ class Preventivos(models.Model):
 	actuante = models.ForeignKey('Actuantes', verbose_name='Actuante', related_name='Actuante', on_delete=models.PROTECT)
 	preventor = models.ForeignKey('Actuantes', verbose_name='Preventor', related_name='Preventor', on_delete=models.PROTECT)
 	dependencia = models.ForeignKey('Dependencias',blank=True,null=True)
-	autoridades = models.ManyToManyField('RefAutoridad',blank=True,null=True)
+	autoridades = models.ManyToManyField('RefAutoridad',blank=True)
 	sendwebservice = models.IntegerField(default=0)
   
 	def __unicode__(self):
@@ -738,7 +738,7 @@ class RefMotivosHecho(models.Model):
 class Hechos(models.Model):
 	fecha_carga=models.DateTimeField(blank=True,null=True)
 	descripcion=models.CharField(max_length=2000,blank=True,null=True)
-	preventivo=models.ForeignKey('Preventivos', unique=True, on_delete=models.PROTECT,related_name='hecho')
+	preventivo=models.OneToOneField('Preventivos',on_delete=models.PROTECT,related_name='hecho')
 	motivo=models.ForeignKey('RefMotivosHecho', null=False, on_delete=models.PROTECT)
 	fecha_desde=models.DateTimeField()
 	fecha_hasta=models.DateTimeField()
@@ -889,8 +889,8 @@ class Lugar(models.Model):
 	longitud = models.CharField(max_length=50)
 	barrio = models.ForeignKey('RefBarrios',on_delete = models.PROTECT,blank = True, null = True)
 	tipo_lugar = models.ForeignKey('RefLugares',on_delete=models.PROTECT)
-	cond_climaticas = models.ManyToManyField('RefCondclimas',related_name='condiciones',blank=True,null=True)
-	hecho = models.ForeignKey('Hechos', unique=True,related_name='lugar_hecho',on_delete = models.PROTECT)
+	cond_climaticas = models.ManyToManyField('RefCondclimas',related_name='condiciones',blank=True)
+	hecho = models.OneToOneField('Hechos',related_name='lugar_hecho',on_delete = models.PROTECT)
 	lote = models.CharField(default='0',max_length = 45,blank=True,null = True)
 	manzana = models.CharField(default='0',max_length = 45,blank=True,null = True)
 	sector = models.CharField(default='',max_length = 45,blank=True,null = True)
@@ -999,7 +999,7 @@ class Armas(models.Model):
 	modelo=models.CharField(max_length=100,blank=True,null=True)
 	calibre=models.CharField(max_length=10,blank=True,null=True)
 	nro_arma=models.CharField(max_length=50,blank=True,null=True)
-	nro_doc = models.IntegerField(max_length=8,blank=True,null=True)
+	nro_doc = models.IntegerField(blank=True,null=True)
 	propietario=models.CharField(max_length=100,blank=True,null=True)
 	fecha_carga=models.DateTimeField(auto_now=True)
 
@@ -1059,7 +1059,7 @@ class Vehiculos(models.Model):
 	modelo=models.CharField(max_length=50,null=True,blank=True)
 	idmarca=models.ForeignKey('RefTrademark',on_delete=models.PROTECT,null=True,blank=True)
 	fecha_carga=models.DateTimeField(auto_now=True)
-	nro_doc = models.IntegerField(max_length=8,null=True,blank=True)
+	nro_doc = models.IntegerField(null=True,blank=True)
 	propietario = models.CharField(max_length=100,null=True,blank=True)
 	def __unicode__(self):
 		return u'%s' % (self.dominio)
@@ -1144,7 +1144,7 @@ class Ampliacion(models.Model):
 	id                  = models.AutoField(primary_key = True)
 	fecha               = models.DateTimeField(auto_now=True)
 	titulo              = models.CharField(max_length=100)
-	autoridades         = models.ManyToManyField('RefAutoridad',null=True,blank=True)
+	autoridades         = models.ManyToManyField('RefAutoridad',blank=True)
 	descripcion         = models.CharField(max_length=2000)
 	preventivo          = models.ForeignKey('Preventivos',related_name='ampli')
 	fecha_autorizacion  = models.DateTimeField(null=True,blank=True)

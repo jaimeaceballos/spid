@@ -12,8 +12,10 @@ class AutoLogout:
       return
 
     try:
-      if datetime.now() - request.session['last_touch'] > timedelta( 0, settings.AUTO_LOGOUT_DELAY * 60, 0):
-        state="SE CERRO SPID POR FALTA DE TRABAJO" 
+      
+      last_touch = datetime.strptime(request.session['last_touch'], '%Y-%m-%d %H:%M:%S.%f')
+      if datetime.now() - last_touch > timedelta( 0, settings.AUTO_LOGOUT_DELAY * 60, 0):
+        state="SE CERRO SPID POR INACTIVIDAD." 
         auth.logout(request)
         del request.session['last_touch']
         form = DependenciasForm()
@@ -24,5 +26,5 @@ class AutoLogout:
      
 
    
-    request.session['last_touch'] = datetime.now()
+    request.session['last_touch'] = str(datetime.now())
   

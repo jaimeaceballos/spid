@@ -1,12 +1,12 @@
 #encoding:utf-8 
-from models import *
+from preventivos.models import *
 from preventivos.forms import *
 from django.core.context_processors import csrf
 from django.template import Context, Template, RequestContext
 from django.http import HttpResponseRedirect,HttpResponse
 from django.shortcuts import render, render_to_response,get_object_or_404
 from django.core import serializers
-from django.utils import simplejson
+import json as simplejson
 from django.contrib.auth import authenticate, login
 from django.core.mail import EmailMultiAlternatives
 from django.core.mail import send_mail
@@ -41,7 +41,7 @@ def obtener_dependencias(request,depes):
         data = request.POST
         dependencias = Dependencias.objects.filter(unidades_regionales = depes)
         data = serializers.serialize("json", dependencias)
-        return HttpResponse(data, mimetype='application/json')
+        return HttpResponse(data, content_type='application/json')
 
 def help_view(request):
     state = ''
@@ -112,12 +112,12 @@ def login_user(request):
                 #fecha_joined=datetime.datetime.strftime(user.date_joined, "%Y-%m-%d %H:%M:%S")
                 #print type(datetime.datetime.strptime(fecha_login, "%Y-%m-%d %H:%M:%S")),fecha_login,fecha_joined
                 #if datetime.datetime.strptime(fecha_login, "%Y-%m-%d %H:%M:%S")<=datetime.datetime.strptime(fecha_joined, "%Y-%m-%d %H:%M:%S"):
-                if user.get_profile().last_login:
+                if user.get_profile.last_login:
                    changePass = 'si'
               
                 auth.login(request, user)
-                userp=user.get_profile()
-                profiles = user.get_profile()
+                userp=user.get_profile
+                profiles = user.get_profile
                 uregs=profiles.ureg
                 depes=profiles.depe
                 uregi=UnidadesRegionales.objects.get(descripcion=uregs)
@@ -155,12 +155,12 @@ def login_user(request):
                 #fecha_joined=datetime.datetime.strftime(user.date_joined, "%Y-%m-%d %H:%M:%S")
                 #print type(datetime.datetime.strptime(fecha_login, "%Y-%m-%d %H:%M:%S")),fecha_login,fecha_joined
                 #if datetime.datetime.strptime(fecha_login, "%Y-%m-%d %H:%M:%S")!=datetime.datetime.strptime(fecha_joined, "%Y-%m-%d %H:%M:%S"):
-                if user.get_profile().last_login:
+                if user.get_profile.last_login:
                    changePass = 'si'
               
                 auth.login(request, user)
-                userp=user.get_profile()
-                profiles = user.get_profile()
+                userp=user.get_profile
+                profiles = user.get_profile
                 uregs=profiles.ureg
                 depes=profiles.depe
                 uregi=UnidadesRegionales.objects.get(descripcion=uregs)
@@ -327,7 +327,7 @@ def passwordChange(request):
      user.date_joined=datetime.datetime.now()
      user.set_password(pass1)
      user.save()
-     profiles = user.get_profile()
+     profiles = user.get_profile
      profiles.last_login=False
      profiles.save()
      changePass = ''

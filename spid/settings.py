@@ -104,7 +104,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',
+    #'django.middleware.transaction.TransactionMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.threadlocals.ThreadLocals',
      # Uncomment the next line for simple clickjacking protection:
@@ -161,7 +161,7 @@ INSTALLED_APPS = (
     #'django.contrib.captcha',
        # Uncomment the next line to enable the admin:
     #'django_admin_bootstrapped.bootstrap3',
-    'django_admin_bootstrapped',
+    #'django_admin_bootstrapped',
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
@@ -199,7 +199,7 @@ LOGGING = {
 
 AUTO_LOGOUT_DELAY = 15 #equivalent to 30 minutos de espera de actividad en el sistema
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-AUTH_PROFILE_MODULE = 'preventivos.UserProfile'
+#AUTH_PROFILE_MODULE = 'preventivos.UserProfile'
 #*** aqui va el servidor de correo de policia
 """
 EMAIL_HOST = 'smtp.gmail.com'

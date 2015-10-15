@@ -71,7 +71,7 @@ from django.db.models import Q
 #from reportlab.pdfgen import canvas
 from django.utils.translation import ugettext
 from wkhtmltopdf.views import PDFResponse, PDFTemplateView, PDFTemplateResponse
-from django.forms.util import ErrorList
+from django.forms.utils import ErrorList
 from xml.sax import make_parser, SAXException
 from xml.sax.handler import feature_namespaces
 from django.utils.dateparse import parse_datetime
@@ -176,8 +176,8 @@ class preventivos(SessionWizardView):
 				 
 				form = super(preventivos, self).get_form(step, data, files)
 			
-				if  self.request.user.get_profile().depe.descripcion == 'RADIO CABECERA-PM':
-								depe = self.request.user.get_profile().ureg
+				if  self.request.user.get_profile.depe.descripcion == 'RADIO CABECERA-PM':
+								depe = self.request.user.get_profile.ureg
 								ureg= UnidadesRegionales.objects.filter(descripcion__contains='MADRYN')
 								if depe is None:
 									 form.errors['__all__'] = form.error_class(["Regrese a la pantalla anterior e Ingrese todos los Datos Obligatorios"])
@@ -188,8 +188,8 @@ class preventivos(SessionWizardView):
 								if step=='nro':
 									 form.fields['dependencia'].queryset = depe
 			 
-				if  self.request.user.get_profile().depe.descripcion == 'RADIO CABECERA-TW':
-								depe = self.request.user.get_profile().ureg
+				if  self.request.user.get_profile.depe.descripcion == 'RADIO CABECERA-TW':
+								depe = self.request.user.get_profile.ureg
 									
 								ureg= UnidadesRegionales.objects.filter(descripcion__contains='TRELEW')     
 								if depe is None:
@@ -200,8 +200,8 @@ class preventivos(SessionWizardView):
 								if step=='nro':
 									 form.fields['dependencia'].queryset = depe
 
-				if  self.request.user.get_profile().depe.descripcion == 'RADIO CABECERA-ESQ':
-								depe = self.request.user.get_profile().ureg
+				if  self.request.user.get_profile.depe.descripcion == 'RADIO CABECERA-ESQ':
+								depe = self.request.user.get_profile.ureg
 									
 								ureg= UnidadesRegionales.objects.filter(descripcion__contains='ESQUEL')  
 								if depe is None:
@@ -212,8 +212,8 @@ class preventivos(SessionWizardView):
 								if step=='nro':
 									 form.fields['dependencia'].queryset = depe
 
-				if  self.request.user.get_profile().depe.descripcion == 'RADIO CABECERA-CR':
-								depe = self.request.user.get_profile().ureg
+				if  self.request.user.get_profile.depe.descripcion == 'RADIO CABECERA-CR':
+								depe = self.request.user.get_profile.ureg
 									
 								ureg= UnidadesRegionales.objects.filter(descripcion__contains='COMODORO RIVADAVIA')  
 								if depe is None:
@@ -224,8 +224,8 @@ class preventivos(SessionWizardView):
 								if step=='nro':
 									 form.fields['dependencia'].queryset = depe
 
-				if  self.request.user.get_profile().depe.descripcion == 'CENTRAL RADIO':
-								depe = self.request.user.get_profile().ureg
+				if  self.request.user.get_profile.depe.descripcion == 'CENTRAL RADIO':
+								depe = self.request.user.get_profile.ureg
 								if step is None:
 									 step=self.steps.current   
 								ureg= UnidadesRegionales.objects.exclude(descripcion__icontains='AREA') 
@@ -236,10 +236,10 @@ class preventivos(SessionWizardView):
 								#form.fields['dependencia'].queryset = depes
 						
 				### realizar el paso en caso de que el usuario sea de investigaciones
-				#depe=self.request.user.get_profile().depe
+				#depe=self.request.user.get_profile.depe
 				if step == "actores":
 							#print self.get_cleaned_data_for_step('nro')['dependencia']
-							if self.request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or  'RADIO' in self.request.user.get_profile().depe.descripcion:
+							if self.request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or  'RADIO' in self.request.user.get_profile.depe.descripcion:
 							 
 								depe = self.get_cleaned_data_for_step('nro')['dependencia']
 								nro = self.get_cleaned_data_for_step('nro')['nro']
@@ -275,12 +275,12 @@ class preventivos(SessionWizardView):
 									form.fields['preventor'].queryset = preventor
 							
 							 
-							if self.request.user.get_profile().depe.descripcion!="Jefatura" and self.request.user.get_profile().depe.descripcion != 'INVESTIGACIONES' and  self.request.user.get_profile().depe.descripcion != 'CENTRAL RADIO':
+							if self.request.user.get_profile.depe.descripcion!="Jefatura" and self.request.user.get_profile.depe.descripcion != 'INVESTIGACIONES' and  self.request.user.get_profile.depe.descripcion != 'CENTRAL RADIO':
 				 
-								if 'RADIO CABECERA' in self.request.user.get_profile().depe.descripcion:
+								if 'RADIO CABECERA' in self.request.user.get_profile.depe.descripcion:
 									 depe=self.get_cleaned_data_for_step('nro')['dependencia']
 								else:
-									 depe=self.request.user.get_profile().depe
+									 depe=self.request.user.get_profile.depe
 
 								id_depe=Dependencias.objects.filter(descripcion__exact=depe).values('id')
 							 
@@ -302,23 +302,23 @@ class preventivos(SessionWizardView):
 								 
 
 				if step == 'autoridades':
-						 if self.request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or  self.request.user.get_profile().depe.descripcion == 'CENTRAL RADIO':
+						 if self.request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or  self.request.user.get_profile.depe.descripcion == 'CENTRAL RADIO':
 								id_ciudad = Dependencias.objects.get(id=self.get_cleaned_data_for_step('nro')['dependencia'].id).ciudad_id
 						 else:
-								id_ciudad=self.request.user.get_profile().depe.ciudad.id
-						 #id_ciudad=self.request.user.get_profile().depe.ciudad.id
-						 if self.request.user.get_profile().depe!="Jefatura":
+								id_ciudad=self.request.user.get_profile.depe.ciudad.id
+						 #id_ciudad=self.request.user.get_profile.depe.ciudad.id
+						 if self.request.user.get_profile.depe!="Jefatura":
 								form.fields['autoridades'].queryset=RefCiudades.objects.get(id=id_ciudad).ciu_autori.all()
 							
 				
 				if step=='confirmation':
-					 if self.request.user.get_profile().depe.descripcion == 'INVESTIGACIONES'  or  'RADIO' in self.request.user.get_profile().depe.descripcion:
+					 if self.request.user.get_profile.depe.descripcion == 'INVESTIGACIONES'  or  'RADIO' in self.request.user.get_profile.depe.descripcion:
 								depe = self.get_cleaned_data_for_step('nro')['dependencia']
 								#id_ciudad = Dependencias.objects.get(id=self.get_cleaned_data_for_step('nro')['dependencia'].id).ciudad_id
 			
 					 else:
-							 depe=self.request.user.get_profile().depe
-							 #id_ciudad=self.request.user.get_profile().depe.ciudad.id
+							 depe=self.request.user.get_profile.depe
+							 #id_ciudad=self.request.user.get_profile.depe.ciudad.id
 			
 					 id_depe=Dependencias.objects.filter(descripcion__exact=depe).values('id')
 							 
@@ -351,7 +351,7 @@ class preventivos(SessionWizardView):
 				actuante= form.cleaned_data['actuante']
 				preventor=  form.cleaned_data['preventor']
 				autoridades=form.cleaned_data['autoridades']
-				if self.request.user.get_profile().depe.descripcion == 'INVESTIGACIONES'  or  'RADIO' in self.request.user.get_profile().depe.descripcion:
+				if self.request.user.get_profile.depe.descripcion == 'INVESTIGACIONES'  or  'RADIO' in self.request.user.get_profile.depe.descripcion:
 					dependencia = self.get_cleaned_data_for_step('nro')['dependencia']
 					nro = self.get_cleaned_data_for_step('nro')['nro']
 					anio= self.get_cleaned_data_for_step('nro')['anio']
@@ -365,7 +365,7 @@ class preventivos(SessionWizardView):
 				
 							 
 				else:
-					depe=self.request.user.get_profile().depe
+					depe=self.request.user.get_profile.depe
 
 					dependencia=Dependencias.objects.get(id__exact=depe.id)
 
@@ -580,7 +580,7 @@ def obtener_datosfirst(request,idprev):
 					 
 					 if request.POST.get('modos'):
 						hechoDelito.refmodoshecho = RefModosHecho.objects.get(id = request.POST.get('modos'))
-					 if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile().depe.descripcion:
+					 if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile.depe.descripcion:
 						
 						 try:
 							 idhec=hecho.id
@@ -611,7 +611,7 @@ def obtener_datosfirst(request,idprev):
 			
 					 #delitos =HechosDelito.objects.filter(hechos = idhecs,borrado__isnull=True)
 
-				 if 'MUJER' in request.user.get_profile().depe.descripcion and request.user.get_profile().depe==depe:
+				 if 'MUJER' in request.user.get_profile.depe.descripcion and request.user.get_profile.depe==depe:
 					tipodelito=RefDelito.objects.get(id = request.POST.get('delito'))
 					  
 					for delis in listadelitos:
@@ -647,7 +647,7 @@ def obtener_datosfirst(request,idprev):
 					hec.descripcion=''
 					hec.preventivo_id=idprev
 					
-					if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in  request.user.get_profile().depe.descripcion:
+					if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in  request.user.get_profile.depe.descripcion:
 						try: 
 							hec.save()
 						except IntegrityError:
@@ -678,7 +678,7 @@ def obtener_datosfirst(request,idprev):
 					if request.POST.get('modos'):
 					 hechoDelito.refmodoshecho = RefModosHecho.objects.get(id = request.POST.get('modos'))
 
-					if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile().depe.descripcion: 
+					if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile.depe.descripcion: 
 						try:
 
 							hechoDelito.save()
@@ -700,7 +700,7 @@ def obtener_datosfirst(request,idprev):
 				else:
 					continua="no" 
 
-				if 'MUJER' in request.user.get_profile().depe.descripcion and request.user.get_profile().depe==depe:
+				if 'MUJER' in request.user.get_profile.depe.descripcion and request.user.get_profile.depe==depe:
 					tipodelito=RefDelito.objects.get(id = request.POST.get('delito'))
 					
 					if 'VIOLENCIA FAMILIAR' in tipodelito.descripcion or 'Violencia Familiar' in tipodelito.descripcion:
@@ -757,7 +757,7 @@ def obtener_datosfirst(request,idprev):
 				 hecho.descripcion=hecho.descripcion.strip()
 				 hecho.descripcion=request.POST.get('descrihecho').strip()
 				 #print hecho.descripcion
-				 if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile().depe.descripcion: 
+				 if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile.depe.descripcion: 
 						
 							hecho.save()
 							idhec=hecho.id
@@ -795,7 +795,7 @@ def obtener_datosfirst(request,idprev):
 				 motivo=request.POST.get('motivo')
 				 fecha_desde=request.POST.get('fecha_desde')
 				 fecha_hasta=request.POST.get('fecha_hasta')
-				 if 'MUJER' in request.user.get_profile().depe.descripcion and request.user.get_profile().depe==depe:
+				 if 'MUJER' in request.user.get_profile.depe.descripcion and request.user.get_profile.depe==depe:
 					for delis in delitos:
 					   delitus=str(delis)
 					   if 'VIOLENCIA FAMILIAR' in delitus or 'Violencia Familiar' in delitus:
@@ -903,7 +903,7 @@ def reporactivity(request, user):
 					usuarios = User.objects.get(username=user)
 
 					usua = User.objects.filter(username=user).values()
-					idem = usuarios.get_profile()
+					idem = usuarios.get_profile
 					dnis = usuarios.username
 					apellidos=usuarios.last_name
 					nombres=usuarios.first_name
@@ -977,7 +977,7 @@ def ngrupos(request):
 
 
 @login_required
-@transaction.commit_on_success
+@transaction.atomic
 @permission_required('user.is_staff','administrador')
 def new_user(request):
 		state= request.session.get('state')
@@ -1017,7 +1017,7 @@ def new_user(request):
 			 if User.objects.filter(username=dni).values('username','first_name','last_name',):
 					errors.append('Usuario Existente. Confirme el Email del usuario')
 					usuarios = User.objects.get(username=dni)
-					idem = usuarios.get_profile()
+					idem = usuarios.get_profile
 					ids= usuarios.id
 					dnis = usuarios.username
 					apellidos=usuarios.last_name
@@ -1181,7 +1181,7 @@ def new_user(request):
 
 										user.save()
 										user = User.objects.get(username=username)
-										profiles = user.get_profile()
+										profiles = user.get_profile
 										 
 										uregs=UnidadesRegionales.objects.get(pk=ureg)
 										depes=Dependencias.objects.get(pk=depe)
@@ -1237,7 +1237,7 @@ def new_user(request):
 			return render_to_response('./newuser.html', {'listaper':listaper,'ocupacion':ocupacion,'lista':lista,'usuarios':usuarios,'form':form,'formnew':formnew,'errors': errors,'state':state, 'destino': destino},context_instance=RequestContext(request))
 
 @login_required
-@transaction.commit_on_success
+@transaction.atomic
 @permission_required('user.is_staff')
 def gruposperm(request):
 		state= request.session.get('state')
@@ -1320,7 +1320,7 @@ def gruposperm(request):
 
 
 @login_required
-@transaction.commit_on_success
+@transaction.atomic
 @permission_required('user.is_staff','administrador')
 def usuarios(request, iduser):
 	state= request.session.get('state')
@@ -1459,7 +1459,7 @@ def usuarios(request, iduser):
 											 
 												user.save()
 												user = User.objects.get(username=iduser)
-												profiles = user.get_profile()
+												profiles = user.get_profile
 												 
 												uregs=UnidadesRegionales.objects.get(pk=ureg)
 												depes=Dependencias.objects.get(pk=depe)
@@ -1592,7 +1592,7 @@ def usuarios(request, iduser):
 									user.set_password(password)
 									user.save()
 									user = User.objects.get(username=iduser)
-									profiles = user.get_profile()
+									profiles = user.get_profile
 									
 									profiles.ureg_id=UnidadesRegionales.objects.get(id=ureg)
 									profiles.depe_id=Dependencias.objects.get(id=depe)
@@ -1624,7 +1624,7 @@ def usuarios(request, iduser):
 									usuarios = User.objects.get(username=iduser)
 									#print usuarios  
 									usua = User.objects.filter(username=iduser).values()
-									idem = usuarios.get_profile()
+									idem = usuarios.get_profile
 									dnis = usuarios.username
 									apellidos=usuarios.last_name
 									nombres=usuarios.first_name
@@ -1672,7 +1672,7 @@ asignar permisos a grupos de usuarios
 antes se debe crear el grupo
 
 @login_required
-@transaction.commit_on_success
+@transaction.atomic
 @permission_required('user.is_staff')
 def permisos(request):
 		state= request.session.get('state')
@@ -1690,7 +1690,7 @@ def permisos(request):
 			 if User.objects.filter(username=dni).values('username','first_name','last_name',):
 					errors.append('Usuario Existente. Confirme el Email del usuario')
 					usuarios = User.objects.get(username=dni)
-					idem = usuarios.get_profile()
+					idem = usuarios.get_profile
 					ids= usuarios.id
 					dnis = usuarios.username
 					apellidos=usuarios.last_name
@@ -1771,7 +1771,7 @@ def permisos(request):
 								user.set_password(password)
 								user.save()
 								user = User.objects.get(username=username)
-								profiles = user.get_profile()
+								profiles = user.get_profile
 								uregs=UnidadesRegionales.objects.get(pk=ureg)
 					
 								depes=Dependencias.objects.get(pk=depe)
@@ -1947,21 +1947,21 @@ def obtener_barrios(request,idcit):
 				data = request.POST
 				barrios = RefBarrios.objects.filter(ciudad = idcit)
 				data = serializers.serialize("json", barrios)
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 @login_required
 def obtener_calle(request,idcit):
 				data = request.POST
 				calles = RefCalles.objects.filter(ciudad = idcit)
 				data = serializers.serialize("json", calles)
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 @login_required
 def obtener_ciudades(request,pais):
 				data = request.POST
 				ciudades = RefCiudades.objects.filter(pais= pais)
 				data = serializers.serialize("json", ciudades)
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 @login_required
 def obtener_modos(request,idd):
@@ -1977,21 +1977,21 @@ def obtener_modos(request,idd):
 					 modos=[]"""
 				data = serializers.serialize("json", modos)
 				
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 @login_required
 def obtener_subtiposa(request,uso):
 				data = request.POST
 				subtiposa = RefSubtiposa.objects.filter(tipo = uso)
 				data = serializers.serialize("json", subtiposa)
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 @login_required
 def obtener_delitos(request,idtd):
 				data = request.POST
 				delitos = RefDelito.objects.filter(tipo_delito = idtd)
 				data = serializers.serialize("json", delitos)
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 
 @login_required
@@ -1999,21 +1999,21 @@ def obtener_dependencias(request,ure):
 				data = request.POST
 				dependencias = Dependencias.objects.filter(unidades_regionales_id = ure)
 				data = serializers.serialize("json", dependencias)
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 @login_required
 def obtener_provincia(request,pais):
 				data = request.POST
 				provincias = RefProvincia.objects.filter(pais = pais)
 				data = serializers.serialize("json", provincias)
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 @login_required
 def obtener_departa(request,prvi):
 				data = request.POST
 				depa = RefDepartamentos.objects.filter(provincia = prvi)
 				data = serializers.serialize("json", depa)
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 @login_required
 @group_required(["policia","investigaciones","visita","radio"])
@@ -3735,7 +3735,7 @@ def obtener_calles(request,idci):
 				calles = RefCalles.objects.filter(ciudad = idci)
 				data = serializers.serialize("json", calles)
 				
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 
 #la funcion en donde se actualiza y/o elimina un Barrio segun la ciudad
@@ -4101,7 +4101,7 @@ def oficiales(request,idact):
 
 #abm de personas
 @login_required
-@transaction.commit_on_success
+@transaction.atomic
 @group_required(["administrador","policia","investigaciones","radio"])
 def personas(request):
 	state       = request.session.get('state')
@@ -4335,7 +4335,7 @@ def newperso(request):
 	return render_to_response('./actuantes.html',{'formpr':formpr,'formp':formp,'ciudad':ciudad,'personas':personas,'filtro':filtro,'pers':pers,'formj':formj,'apeynom':apeynom,'dni':dni,'form':form,'errors':errors,'lista':lista,'state':state,'destino':destino},context_instance=RequestContext(request))
 
 @login_required
-@transaction.commit_on_success
+@transaction.atomic
 @group_required(["administrador","policia","investigaciones","radio"])
 #@permission_required('user.is_staff')
 def persona(request, idper):
@@ -4702,7 +4702,7 @@ def verprev(request):
 		 fecha_cargah=request.POST.get('fecha_cargah')
 		 ureg=request.POST.get('ureg')
 		 depe=request.POST.get('depe')
-		 unidadregi=Dependencias.objects.get(descripcion__contains=request.user.get_profile().depe.descripcion)
+		 unidadregi=Dependencias.objects.get(descripcion__contains=request.user.get_profile.depe.descripcion)
 		 jurisdi=unidadregi.ciudad.descripcion
 		 #fecha_cargas=datetime.datetime.strptime(fecha_carga,"%d/%m/%Y %H:%M:%S")
 		 #fecha_cargah=(datetime.datetime.strptime(fecha_cargah,"%d/%m/%Y")+timedelta(days=1)).date()
@@ -5259,7 +5259,7 @@ def verhechos(request):
 	autora=[]
 	tipodelito=''
 	delito=''
-	unidadregi=Dependencias.objects.get(descripcion__contains=request.user.get_profile().depe.descripcion)
+	unidadregi=Dependencias.objects.get(descripcion__contains=request.user.get_profile.depe.descripcion)
 	jurisdi=unidadregi.ciudad.descripcion
 	if request.POST.get('ver')=='1':
 		 sonauti=request.POST.get('sonauti')
@@ -5373,7 +5373,7 @@ def verdelitos(request):
 	autora=[]
 	tipodelito=''
 	delito=''
-	unidadregi=Dependencias.objects.get(descripcion__contains=request.user.get_profile().depe.descripcion)
+	unidadregi=Dependencias.objects.get(descripcion__contains=request.user.get_profile.depe.descripcion)
 	jurisdi=unidadregi.ciudad.descripcion
 	if request.POST.get('ver')=='1':
 		 auti='si'
@@ -5848,13 +5848,13 @@ def updatehechos(request,idprev):
 					hechoDelito.refdelito = RefDelito.objects.get(id = request.POST.get('delito'))
 					if request.POST.get('modos'):
 					 hechoDelito.refmodoshecho = RefModosHecho.objects.get(id = request.POST.get('modos'))
-					if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile().depe.descripcion: 
+					if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile.depe.descripcion: 
 						 try:
 							hechoDelito.save()
 							descripcion=request.POST.get('descripcion')
 							continua='no'
 							grabo='si'
-							if request.user.get_profile().depe==depe or 'MUJER' in request.user.get_profile().depe.descripcion:
+							if request.user.get_profile.depe==depe or 'MUJER' in request.user.get_profile.depe.descripcion:
 							   tipodelito=RefDelito.objects.get(id = request.POST.get('delito'))
 							   if 'VIOLENCIA FAMILIAR' in tipodelito.descripcion or 'Violencia Familiar' in tipodelito.descripcion:
 								   boton='si'
@@ -5902,7 +5902,7 @@ def updatehechos(request,idprev):
 					 #print type(fd),type(fde),type(fha)
 					 #print fd,fde,fha
 					 #print type(hecho.fecha_hasta),type(ids.fecha_denuncia)
-					 if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile().depe.descripcion: 
+					 if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile.depe.descripcion: 
 							if hecho.fecha_desde > ids.fecha_denuncia or hecho.fecha_hasta > ids.fecha_denuncia:
 								errors.append('La Fecha de Denuncia nunca puede ser menor a la Fecha y Hora del Hecho sucedido')
 							else: 
@@ -6037,10 +6037,10 @@ def selectPrev(request,prev):
 			preventivo.caratula = form.cleaned_data['caratula']
 			preventivo.actuante = form.cleaned_data['actuante']
 			preventivo.preventor = form.cleaned_data['preventor']
-			ureg=Dependencias.objects.get(descripcion__contains=request.user.get_profile().depe.descripcion)
+			ureg=Dependencias.objects.get(descripcion__contains=request.user.get_profile.depe.descripcion)
 		 
 
-			if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or  'RADIO' in request.user.get_profile().depe.descripcion and depe.ciudad_id==ureg.ciudad_id:
+			if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or  'RADIO' in request.user.get_profile.depe.descripcion and depe.ciudad_id==ureg.ciudad_id:
 				 preventivo.save()
 				 preventivo.autoridades.clear()
 				 for grabauto in form.cleaned_data['autoridades']:
@@ -6087,7 +6087,7 @@ def selectPrev(request,prev):
 	 return render_to_response('./updateprev.html',{'boton':boton,'errors':errors,'fecha_desde':fecha_desde,'fecha_hasta':fecha_hasta,'idmodo':modosref,'delito':delito,'preventivo':preventivo,'unireg':unireg,'fecha_autorizacion':fecha_autorizacion,'lista':lista,'lugarhecho':lugarhecho,'datosinvo':datosinvo,'descripcion':descri,'hechodeli':hechodeli,'idprev':idprev,'form':form,'state':state, 'destino': destino,'depe':depe,'tieneHecho':tieneHecho,'tienelugar':tienelugar,'tienePersonas':tienePersonas,'idhec':idhec,'idper':idper,'tieneelemento':tieneelemento,},context_instance=RequestContext(request))
 	
 @login_required   
-@transaction.commit_on_success
+@transaction.atomic
 @group_required(["administrador","policia","investigaciones","radio"])
 def persinvo(request,idhec,idper):
 
@@ -6315,7 +6315,7 @@ def persinvo(request,idhec,idper):
 			if persoinvoluc:
 				persoinvolu=PersInvolucradas.objects.get(id=request.POST.get('dele'))
 				if 'si' in persoinvolu.detenido:
-					if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile().depe.descripcion: 
+					if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile.depe.descripcion: 
 						Detenidos.objects.filter(persona_id = persoinvolu.persona_id).update(borrado='S',observaciones=request.user.username)
 						PersInvolucradas.objects.get(id=request.POST.get('dele')).delete()
 					else:
@@ -6658,7 +6658,7 @@ def persinvo(request,idhec,idper):
 	return render_to_response('./personasin.html',info,context_instance=RequestContext(request))
 
 @login_required   
-@transaction.commit_on_success
+@transaction.atomic	
 @group_required(["administrador","policia","investigaciones","radio"])
 def persinvom(request,idhec,idper):
 	state= request.session.get('state')
@@ -6810,7 +6810,7 @@ def persinvom(request,idhec,idper):
 											persoin.fechahoradetencion = formr.cleaned_data['fechahoradetencion']
 
 											try:
-											 if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile().depe.descripcion:   
+											 if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile.depe.descripcion:   
 												 if fde>=fd:
 														detenidos.save()
 											 else:
@@ -6870,7 +6870,7 @@ def persinvom(request,idhec,idper):
 		 if persoinvoluc:
 			 persoinvolu=PersInvolucradas.objects.get(id=request.POST.get('dele'))
 			 if 'si' in persoinvolu.detenido:
-				 if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile().depe.descripcion: 
+				 if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile.depe.descripcion: 
 					 Detenidos.objects.filter(persona_id = persoinvolu.persona_id).update(borrado='S',observaciones=request.user.username)
 					 PersInvolucradas.objects.get(id=request.POST.get('dele')).delete()
 				 else:
@@ -6936,7 +6936,7 @@ def persinvom(request,idhec,idper):
 	return render_to_response('./editpersoin.html',info,context_instance=RequestContext(request))
 
 @login_required   
-@transaction.commit_on_success
+@transaction.atomic	
 @group_required(["policia","investigaciones","radio"])
 def lugar_hecho(request,idhecho,idprev):
 	state= request.session.get('state')
@@ -7051,8 +7051,8 @@ def lugar_hecho(request,idhecho,idprev):
 					barrio.descripcion = nbarrio
 					barrio.save()
 					lugar.barrio = barrio
-				#print request.user.get_profile().depe_id,depe
-				if request.user.get_profile().depe_id==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile().depe.descripcion:
+				#print request.user.get_profile.depe_id,depe
+				if request.user.get_profile.depe_id==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile.depe.descripcion:
 				 
 					 lugar.save() 
 					 if request.POST.get('grabar') == 'Modificar':
@@ -7145,7 +7145,7 @@ def street_name(string):
 
 #informar a autoridades por email
 @login_required   
-@transaction.commit_on_success
+@transaction.atomic
 @group_required(["policia","investigaciones","radio"])
 def informe(request,idhec,idprev):
 		info_enviado = False
@@ -7432,7 +7432,7 @@ def informe(request,idhec,idprev):
 		#print type(titulo),type(tresto),type(titulo1), type(titulo2)
 		text_content=titulo+tresto+titulo1+titulo2+titulo3+titulo4+titulo5+titulo6+titulo7
 	 
-		if request.user.get_profile().depe.descripcion != 'INVESTIGACIONES':
+		if request.user.get_profile.depe.descripcion != 'INVESTIGACIONES':
 						 
 			informa=datos.autoridades.values_list('email',flat=True)
 			#agregar email 2jefeacei para que reciba los preventivos
@@ -7511,7 +7511,7 @@ def extraeemail(string):
 	return (nstring)
 """
 @login_required   
-@transaction.commit_on_success
+@transaction.atomic
 @group_required(["policia","investigaciones","radio"])
 def elementos(request,idhecho):
 	state= request.session.get('state')
@@ -7538,7 +7538,7 @@ def elementos(request,idhecho):
 			elementosin=Elementos.objects.filter(id=request.POST.get('dele'))
 		 
 			if elementosin:
-				if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion.find('INVESTIGACIONES')>=0 or request.user.get_profile().depe.descripcion.find('RADIO')>=0:
+				if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion.find('INVESTIGACIONES')>=0 or request.user.get_profile.depe.descripcion.find('RADIO')>=0:
 						obs="elemento borrado por usuario : "+request.user.username
 
 						Elementos.objects.filter(id = request.POST.get('dele')).update(borrado='S',observaciones=obs)
@@ -7718,7 +7718,7 @@ def elementos(request,idhecho):
 
 
 @login_required   
-@transaction.commit_on_success
+@transaction.atomic
 @group_required(["policia","investigaciones","radio"])
 def elemento(request,idhecho,elemento):
 	state= request.session.get('state')
@@ -7833,7 +7833,7 @@ def get_categories(request,rubro):
 				categorias = RefCategory.objects.filter(rubro= rubro)
 				data = serializers.serialize("json", categorias)
 		 
-				return HttpResponse(data, mimetype='application/json')
+				return HttpResponse(data, content_type='application/json')
 
 @login_required   
 @group_required(["policia","investigaciones","radio","visita","judiciales"])
@@ -7847,8 +7847,8 @@ def seemaps(request):
 	injusticia=''
 	haydatos=False
 	refdelitosdes=[]
-	depe=request.user.get_profile().depe_id
-	ureg=request.user.get_profile().ureg_id
+	depe=request.user.get_profile.depe_id
+	ureg=request.user.get_profile.ureg_id
 	preventivo=Dependencias.objects.get(id=depe)
 	depes=depe
 	ureg=ureg
@@ -8403,8 +8403,8 @@ def repestadis(request):
 	injusticia=''
 	haydatos=False
 	refdelitosdes=[]
-	depe=request.user.get_profile().depe_id
-	ureg=request.user.get_profile().ureg_id
+	depe=request.user.get_profile.depe_id
+	ureg=request.user.get_profile.ureg_id
 	preventivo=Dependencias.objects.get(id=depe)
 	depes=depe
 	ureg=ureg
@@ -11656,7 +11656,7 @@ def amplia_ele(request,idprev,idamp):
 			elementosin=Elementos.objects.filter(id=request.POST.get('dele'))
 		 
 			if elementosin:
-				if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion.find('INVESTIGACIONES')>=0 or request.user.get_profile().depe.descripcion.find('RADIO')>=0:
+				if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion.find('INVESTIGACIONES')>=0 or request.user.get_profile.depe.descripcion.find('RADIO')>=0:
 						obs="elemento borrado por usuario : "+request.user.username
 						 
 						Elementos.objects.filter(id = request.POST.get('dele')).update(borrado='S',observaciones=obs)
@@ -12098,7 +12098,7 @@ def verampli(request):
 		 fecha_cargah=request.POST.get('fecha_cargah')
 		 ureg=request.POST.get('ureg')
 		 depe=request.POST.get('depe')
-		 unidadregi=Dependencias.objects.get(descripcion__contains=request.user.get_profile().depe.descripcion)
+		 unidadregi=Dependencias.objects.get(descripcion__contains=request.user.get_profile.depe.descripcion)
 		 jurisdi=unidadregi.ciudad.descripcion
 	 
 		 if titulo and not ureg and not depe:
@@ -12300,7 +12300,7 @@ def verampli(request):
 
 
 @login_required   
-@transaction.commit_on_success
+@transaction.atomic
 @group_required(["policia","investigaciones","radio"])
 def eleampli(request,idhecho,elemento,idamp):
 	state= request.session.get('state')
@@ -12327,7 +12327,7 @@ def eleampli(request,idhecho,elemento,idamp):
 			elementosin=Elementos.objects.filter(id=request.POST.get('dele'))
 		 
 			if elementosin:
-				if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion.find('INVESTIGACIONES')>=0  or request.user.get_profile().depe.descripcion.find('RADIO')>=0:
+				if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion.find('INVESTIGACIONES')>=0  or request.user.get_profile.depe.descripcion.find('RADIO')>=0:
 						obs="elemento borrado por usuario : "+request.user.username
 						 
 						Elementos.objects.filter(id = request.POST.get('dele')).update(borrado='S',observaciones=obs)
@@ -13272,7 +13272,7 @@ def enviar(request,idprev,idamp):
 				 titulo4="Sin Elementos"+'<br><br><hr>'
 			text_content=titulo2+titulo3+titulo4+titulo+tresto+titulo1
 				 
-			if request.user.get_profile().depe.descripcion != 'INVESTIGACIONES':
+			if request.user.get_profile.depe.descripcion != 'INVESTIGACIONES':
 				informa=amplia.autoridades.values_list('email',flat=True)
 				#agregar email 2jefeacei para que reciba los preventivos
 				#print informa,autoridad
@@ -13334,7 +13334,7 @@ def verificardni(request,tdni,dni):
 	data = request.POST
 	persona = Personas.objects.filter(nro_doc = dni,tipo_doc=tdni) 
 	data = serializers.serialize("json", persona)
-	return HttpResponse(data, mimetype='application/json')
+	return HttpResponse(data, content_type='application/json')
 
 def envioemail(envio,nstring,subject,text_content,from_email):
 	#print nstring
@@ -14655,7 +14655,7 @@ def violencia(request,idhec):
 	return render_to_response('./formvif.html',info,context_instance=RequestContext(request))
 
 @login_required   
-@transaction.commit_on_success
+@transaction.atomic
 @group_required(["administrador","policia","investigaciones","radio"])
 def persinvovif(request,idhec,idper):
 	state= request.session.get('state')
@@ -14912,7 +14912,7 @@ def persinvovif(request,idhec,idper):
 			if persoinvoluc:
 				persoinvolu=PersInvolucradas.objects.get(id=request.POST.get('dele'))
 				if 'si' in persoinvolu.detenido:
-					if request.user.get_profile().depe==depe or request.user.get_profile().depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile().depe.descripcion: 
+					if request.user.get_profile.depe==depe or request.user.get_profile.depe.descripcion == 'INVESTIGACIONES' or 'RADIO' in request.user.get_profile.depe.descripcion: 
 						Detenidos.objects.filter(persona_id = persoinvolu.persona_id).update(borrado='S',observaciones=request.user.username)
 						PersInvolucradas.objects.get(id=request.POST.get('dele')).delete()
 					else:
